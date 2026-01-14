@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Cheat Sheet</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d0d0d;
+      --bg-secondary: #161616;
+      --bg-tertiary: #1f1f1f;
+      --accent-orange: #ff6b35;
+      --accent-cyan: #00d4aa;
+      --accent-purple: #a855f7;
+      --accent-blue: #3b82f6;
+      --accent-pink: #ec4899;
+      --accent-yellow: #fbbf24;
+      --text-primary: #ffffff;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --border-color: #2a2a2a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-orange), var(--accent-cyan));
+      border-radius: 2px;
+    }
+
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-orange), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .header .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Section Cards */
+    .section {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .section.orange::before { background: var(--accent-orange); }
+    .section.cyan::before { background: var(--accent-cyan); }
+    .section.purple::before { background: var(--accent-purple); }
+    .section.blue::before { background: var(--accent-blue); }
+    .section.pink::before { background: var(--accent-pink); }
+    .section.yellow::before { background: var(--accent-yellow); }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .section-title .icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .section.orange .icon { background: rgba(255, 107, 53, 0.2); color: var(--accent-orange); }
+    .section.cyan .icon { background: rgba(0, 212, 170, 0.2); color: var(--accent-cyan); }
+    .section.purple .icon { background: rgba(168, 85, 247, 0.2); color: var(--accent-purple); }
+    .section.blue .icon { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
+    .section.pink .icon { background: rgba(236, 72, 153, 0.2); color: var(--accent-pink); }
+    .section.yellow .icon { background: rgba(251, 191, 36, 0.2); color: var(--accent-yellow); }
+
+    /* Code Blocks */
+    code, .code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-tertiary);
+      padding: 0.2em 0.5em;
+      border-radius: 6px;
+      font-size: 0.85em;
+      color: var(--accent-cyan);
+    }
+
+    pre {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-tertiary);
+      padding: 1rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      line-height: 1.7;
+      border: 1px solid var(--border-color);
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    /* Lists */
+    .item-list {
+      list-style: none;
+    }
+
+    .item-list li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .item-list li:last-child {
+      border-bottom: none;
+    }
+
+    .item-label {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .item-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Keyboard Shortcuts */
+    .shortcut {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    kbd {
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      padding: 0.3em 0.6em;
+      font-size: 0.85em;
+      color: var(--text-primary);
+      box-shadow: 0 2px 0 #000;
+    }
+
+    /* Two Column Items */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .two-col .item {
+      background: var(--bg-tertiary);
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .two-col .item .label {
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .two-col .item .desc {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    /* Config Files Table */
+    .config-table {
+      width: 100%;
+      font-size: 0.85rem;
+    }
+
+    .config-table tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .config-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .config-table td {
+      padding: 0.75rem 0;
+      vertical-align: top;
+    }
+
+    .config-table td:first-child {
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      width: 55%;
+      padding-right: 1rem;
+    }
+
+    .config-table td:last-child {
+      color: var(--text-secondary);
+    }
+
+    /* Wide Section */
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    /* Syntax Highlighting */
+    .json-key { color: var(--accent-purple); }
+    .json-string { color: var(--accent-cyan); }
+    .json-number { color: var(--accent-yellow); }
+    .comment { color: var(--text-muted); }
+    .keyword { color: var(--accent-pink); }
+    .function { color: var(--accent-blue); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Claude Code</h1>
+      <p class="subtitle">Quick Reference Cheat Sheet (<span class="icon">🪟</span>)</p>
+    </header>
+
+    <div class="grid">
+      <!-- Essential Shortcuts -->
+      <section class="section orange">
+        <h2 class="section-title">
+          <span class="icon">⌨️</span>
+          Essential Shortcuts
+        </h2>
+        <ul class="item-list">
+          <li>
+            <span class="shortcut"><kbd>Shift</kbd> + <kbd>Tab</kbd></span>
+            <span class="item-desc">Toggle auto-accept mode (allow edits without prompting)</span>
+          </li>
+          <li>
+            <span class="shortcut"><kbd>Shift</kbd> + <kbd>Tab</kbd> x 2</span>
+            <span class="item-desc">Enter Planning Mode (when in default mode)</span>
+          </li>
+          <li>
+            <span class="shortcut"><kbd>Alt</kbd> + <kbd>T</kbd></span>
+            <span class="item-desc">Toggle Thinking on/off</span>
+          </li>
+          <li>
+            <span class="shortcut"><kbd>Esc</kbd></span>
+            <span class="item-desc">Stop Claude / Cancel current action</span>
+          </li>
+          <li>
+            <span class="shortcut"><kbd>Esc</kbd> <kbd>Esc</kbd></span>
+            <span class="item-desc">Jump to previous messages in history</span>
+          </li>
+          <li>
+            <span class="shortcut"><kbd>Ctrl</kbd> + <kbd>O</kbd></span>
+            <span class="item-desc">Toggle verbose mode (see thinking)</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Init & CLAUDE.md -->
+      <section class="section cyan">
+        <h2 class="section-title">
+          <span class="icon">📝</span>
+          Initialize Project
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Create a CLAUDE.md file for your project:</p>
+        <pre><code><span class="comment"># In Claude Code session, type:</span>
+/init</code></pre>
+        <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">
+          This analyzes your codebase and creates a <code>CLAUDE.md</code> file with project context, build commands, and coding conventions.
+        </p>
+        <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.9rem;">
+          Use <code>#</code> prefix during chat to add instructions to CLAUDE.md:<br>
+          <code style="display: block; margin-top: 0.5rem;"># Always use TypeScript strict mode</code>
+        </p>
+      </section>
+
+      <!-- Config Files -->
+      <section class="section purple">
+        <h2 class="section-title">
+          <span class="icon">⚙️</span>
+          Config File Locations
+        </h2>
+        <table class="config-table">
+          <tr>
+            <td>~/.claude/settings.json</td>
+            <td>User settings (all projects)</td>
+          </tr>
+          <tr>
+            <td>~/.claude.json</td>
+            <td>Claude Code configuration (local machine)</td>
+          </tr>
+          <tr>
+            <td>.claude/settings.json</td>
+            <td>Project settings (shared with team)</td>
+          </tr>
+          <tr>
+            <td>.claude/settings.local.json</td>
+            <td>Local project settings (gitignored)</td>
+          </tr>
+          <tr>
+            <td>~/.claude/CLAUDE.md</td>
+            <td>Global memory (all projects)</td>
+          </tr>
+          <tr>
+            <td>./CLAUDE.md</td>
+            <td>Project memory (root)</td>
+          </tr>
+          <tr>
+            <td>./.claude/CLAUDE.local.md</td>
+            <td>Local project memory (gitignored)</td>
+          </tr>
+          <tr>
+            <td>.claude/commands/*.md</td>
+            <td>Custom slash commands (project)</td>
+          </tr>
+          <tr>
+            <td>~/.claude/commands/*.md</td>
+            <td>Custom slash commands (global)</td>
+          </tr>
+        </table>
+      </section>
+
+      <!-- Thinking Modes -->
+      <section class="section blue">
+        <h2 class="section-title">
+          <span class="icon">🧠</span>
+          Thinking Modes
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+          Add these keywords to your prompt to increase reasoning depth:
+        </p>
+        <ul class="item-list">
+          <li>
+            <span class="item-label"><code>think</code></span>
+            <span class="item-desc">~4,000 tokens — Basic extended thinking</span>
+          </li>
+          <li>
+            <span class="item-label"><code>think hard</code> / <code>megathink</code></span>
+            <span class="item-desc">~10,000 tokens — Enhanced reasoning</span>
+          </li>
+          <li>
+            <span class="item-label"><code>think harder</code> / <code>ultrathink</code></span>
+            <span class="item-desc">~32,000 tokens — Maximum reasoning budget</span>
+          </li>
+        </ul>
+        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.8rem;">
+          💡 Press <kbd>Alt</kbd> + <kbd>T</kbd> to toggle thinking on/off. Use <kbd>Ctrl</kbd>+<kbd>O</kbd> to view thinking output.
+        </p>
+      </section>
+
+      <!-- Custom Commands -->
+      <section class="section pink wide">
+        <h2 class="section-title">
+          <span class="icon">🔧</span>
+          Custom Slash Commands
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Create custom commands by adding <code>.md</code> files to <code>.claude/commands/</code>:</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">.claude/commands/review.md</p>
+            <pre><code><span class="comment">---</span>
+<span class="json-key">description</span>: <span class="json-string">Perform code review</span>
+<span class="json-key">allowed-tools</span>: <span class="json-string">Read, Grep, Glob</span>
+<span class="comment">---</span>
+Review this code for:
+1. Security vulnerabilities
+2. Performance issues
+3. Best practices</code></pre>
+          </div>
+          <div>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">.claude/commands/fix-issue.md (with arguments)</p>
+            <pre><code><span class="comment">---</span>
+<span class="json-key">description</span>: <span class="json-string">Fix GitHub issue</span>
+<span class="comment">---</span>
+Fix issue #<span class="keyword">$ARGUMENTS</span> following our
+coding standards.
+
+<span class="comment"># Usage: /fix-issue 123</span></code></pre>
+          </div>
+        </div>
+        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.85rem;">
+          Use <code>$ARGUMENTS</code> placeholder to pass arguments. Commands in <code>~/.claude/commands/</code> are available globally.
+        </p>
+      </section>
+
+      <!-- Built-in Tools -->
+      <section class="section yellow">
+        <h2 class="section-title">
+          <span class="icon">🛠️</span>
+          Built-in Tools
+        </h2>
+        <div class="two-col">
+          <div class="item">
+            <div class="label">Read</div>
+            <div class="desc">Read file contents</div>
+          </div>
+          <div class="item">
+            <div class="label">Write</div>
+            <div class="desc">Create new files</div>
+          </div>
+          <div class="item">
+            <div class="label">Edit</div>
+            <div class="desc">Modify existing files</div>
+          </div>
+          <div class="item">
+            <div class="label">MultiEdit</div>
+            <div class="desc">Batch file edits</div>
+          </div>
+          <div class="item">
+            <div class="label">Bash</div>
+            <div class="desc">Execute shell commands</div>
+          </div>
+          <div class="item">
+            <div class="label">Glob</div>
+            <div class="desc">Find files by pattern</div>
+          </div>
+          <div class="item">
+            <div class="label">Grep</div>
+            <div class="desc">Search file contents</div>
+          </div>
+          <div class="item">
+            <div class="label">LS</div>
+            <div class="desc">List directory contents</div>
+          </div>
+          <div class="item">
+            <div class="label">Task</div>
+            <div class="desc">Launch subagents</div>
+          </div>
+          <div class="item">
+            <div class="label">WebFetch</div>
+            <div class="desc">Fetch web content</div>
+          </div>
+          <div class="item">
+            <div class="label">WebSearch</div>
+            <div class="desc">Search the web</div>
+          </div>
+          <div class="item">
+            <div class="label">TodoWrite</div>
+            <div class="desc">Manage task lists</div>
+          </div>
+          <div class="item">
+            <div class="label">NotebookRead</div>
+            <div class="desc">Read Jupyter notebooks</div>
+          </div>
+          <div class="item">
+            <div class="label">NotebookEdit</div>
+            <div class="desc">Edit Jupyter notebooks</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hook Types -->
+      <section class="section orange">
+        <h2 class="section-title">
+          <span class="icon">🪝</span>
+          Hook Types
+        </h2>
+        <ul class="item-list">
+          <li>
+            <span class="item-label">PreToolUse</span>
+            <span class="item-desc">Before tool execution — block, modify, or allow tools</span>
+          </li>
+          <li>
+            <span class="item-label">PostToolUse</span>
+            <span class="item-desc">After tool completion — validate, format, log results</span>
+          </li>
+          <li>
+            <span class="item-label">UserPromptSubmit</span>
+            <span class="item-desc">When user submits prompt — validate or enhance</span>
+          </li>
+          <li>
+            <span class="item-label">PermissionRequest</span>
+            <span class="item-desc">When permission dialog shown — auto-allow or deny</span>
+          </li>
+          <li>
+            <span class="item-label">Notification</span>
+            <span class="item-desc">When Claude sends notifications</span>
+          </li>
+          <li>
+            <span class="item-label">Stop</span>
+            <span class="item-desc">When agent finishes responding</span>
+          </li>
+          <li>
+            <span class="item-label">SubagentStop</span>
+            <span class="item-desc">When a subagent finishes</span>
+          </li>
+          <li>
+            <span class="item-label">SessionStart / SessionEnd</span>
+            <span class="item-desc">Session lifecycle events</span>
+          </li>
+          <li>
+            <span class="item-label">PreCompact</span>
+            <span class="item-desc">Before compaction operations</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- MCP Servers -->
+      <section class="section cyan">
+        <h2 class="section-title">
+          <span class="icon">🔌</span>
+          Add MCP Servers
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Add MCP servers via CLI:</p>
+        <pre><code><span class="comment"># Add a server</span>
+claude mcp add &lt;name&gt; -- &lt;command&gt;
+
+<span class="comment"># Example: Add GitHub server</span>
+claude mcp add github -- npx -y \
+  @modelcontextprotocol/server-github
+
+<span class="comment"># List configured servers</span>
+claude mcp list
+
+<span class="comment"># Remove a server</span>
+claude mcp remove &lt;name&gt;</code></pre>
+        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.85rem;">
+          Or add to <code>.mcp.json</code> in project root to share with team.
+        </p>
+      </section>
+
+      <!-- Python SDK -->
+      <section class="section purple wide">
+        <h2 class="section-title">
+          <span class="icon">🐍</span>
+          Python SDK Usage
+        </h2>
+        <pre><code><span class="keyword">import</span> asyncio
+<span class="keyword">from</span> claude_agent_sdk <span class="keyword">import</span> query, ClaudeAgentOptions, AssistantMessage, TextBlock
+
+<span class="keyword">async def</span> <span class="function">main</span>():
+    options = ClaudeAgentOptions(
+        allowed_tools=[<span class="json-string">"Read"</span>, <span class="json-string">"Write"</span>, <span class="json-string">"Bash"</span>],
+        permission_mode=<span class="json-string">'acceptEdits'</span>,  <span class="comment"># Auto-accept file edits</span>
+        cwd=<span class="json-string">"/path/to/project"</span>
+    )
+    
+    <span class="keyword">async for</span> message <span class="keyword">in</span> <span class="function">query</span>(
+        prompt=<span class="json-string">"Find and fix the bug in auth.py"</span>,
+        options=options
+    ):
+        <span class="keyword">if</span> <span class="function">isinstance</span>(message, AssistantMessage):
+            <span class="keyword">for</span> block <span class="keyword">in</span> message.content:
+                <span class="keyword">if</span> <span class="function">isinstance</span>(block, TextBlock):
+                    <span class="function">print</span>(block.text)
+
+asyncio.<span class="function">run</span>(<span class="function">main</span>())</code></pre>
+        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.85rem;">
+          Install: <code>pip install claude-agent-sdk</code> — Requires Claude Code CLI: <code>npm install -g @anthropic-ai/claude-code</code>
+        </p>
+      </section>
+
+      <!-- Hook Input -->
+      <section class="section blue wide">
+        <h2 class="section-title">
+          <span class="icon">📋</span>
+          Log Tool Input
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Add to <code>.claude/settings.json</code> to log all tool inputs to a file:</p>
+        <pre><code>{
+  <span class="json-key">"hooks"</span>: {
+    <span class="json-key">"PostToolUse"</span>: [  <span class="comment">// Or "PreToolUse" or "Stop", etc</span>
+      {
+        <span class="json-key">"matcher"</span>: <span class="json-string">"*"</span>,
+        <span class="json-key">"hooks"</span>: [
+          {
+            <span class="json-key">"type"</span>: <span class="json-string">"command"</span>,
+            <span class="json-key">"command"</span>: <span class="json-string">"jq . > post-log.json"</span>
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.85rem;">
+          Hook receives JSON via stdin with <code>tool_name</code>, <code>tool_input</code>, and <code>tool_response</code> (for PostToolUse).
+          Exit code 2 blocks the action and shows error to Claude. You can use this information to build custom hook commands.
+        </p>
+      </section>
+
+    </div>
+
+    <footer class="footer">
+      <p>Claude Code Cheat Sheet • Generated January 2026</p>
+    </footer>
+  </div>
+</body>
+</html>
