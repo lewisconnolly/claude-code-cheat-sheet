@@ -82,7 +82,7 @@
     /* Grid Layout */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
 
@@ -439,13 +439,13 @@
       </section>
 
       <!-- Custom Commands -->
-      <section class="section pink wide">
+      <section class="section pink">
         <h2 class="section-title">
           <span class="icon">🔧</span>
           Custom Slash Commands
         </h2>
         <p style="color: var(--text-secondary); margin-bottom: 1rem;">Create custom commands by adding <code>.md</code> files to <code>.claude/commands/</code>:</p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
           <div>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">.claude/commands/review.md</p>
             <pre><code><span class="comment">---</span>
