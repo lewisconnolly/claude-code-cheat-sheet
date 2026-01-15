@@ -7,6 +7,7 @@ A quick reference guide for [Claude Code](https://claude.ai/code) - Anthropic's 
 ## Contents
 
 - **Essential Shortcuts** - Keyboard shortcuts for auto-accept mode, planning mode, thinking toggle, and more
+- **Input Shortcuts** - Prompt editing shortcuts for multiline input, text deletion, cursor navigation, and history
 - **Initialize Project** - Using `/init` to create CLAUDE.md files
 - **Config File Locations** - Where settings, memory files, and custom commands are stored
 - **Thinking Modes** - Keywords to control reasoning depth (`think`, `megathink`, `ultrathink`)
